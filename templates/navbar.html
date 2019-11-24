@@ -1,0 +1,53 @@
+{%load static%}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+
+  <a class="navbar-brand" href="{%url 'home' %}">
+      <img src="{% static '/img/logo.jpg' %}">
+  </a>
+
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact' %}">Conact Us</a>
+      </li>
+     
+    </ul>
+
+    <ul class="navbar-nav navbar-right">
+      {% if request.user.is_authenticated %}
+      <a class="btn btn-outline-success " href="{% url 'auth_logout' %}">Logout</a>
+      {% endif %}
+      {% if not request.user.is_authenticated and not "/accounts/login" in request.get_full_path %}
+      <li class="nav-item ">
+        <a class="nav-link mx-sm-3" href="{% url 'registration_register' %}">Register</a>
+      </li>
+
+      <form method="post" action="{% url 'auth_login' %}" class="form-inline">{%csrf_token%}
+        <div class="form-group mx-sm-1">
+      
+          <input type="text" name="username" placeholder="Username" autofocus="" class="form-control " required=""
+            id="id_username">
+          </div>
+            <div class="form-group mx-sm-1 ">
+          <input type="password" name="password" placeholder="Password" class=" form-control" required="" id="id_password">
+        </div>
+    
+          <input class="btn btn-primary mx-sm-1" type="submit" value="Log in">
+
+      
+      </form>
+
+      <!-- <a class="btn btn-outline-success" href="{% url 'auth_login' %}">Login</a> -->
+
+      {% endif %}
+
+    </ul>
+
+  </div>
+</nav>
